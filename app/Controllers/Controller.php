@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Core;
+namespace App\Controllers;
 
 
 class Controller
@@ -18,7 +18,7 @@ class Controller
     public function register()
     {
 
-        include dirname(__DIR__) . '/Views/Front/Auth/register.php';
+        include dirname(__DIR__) . '/Views/Auth/register.php';
 
         exit;
 

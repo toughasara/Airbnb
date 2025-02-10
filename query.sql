@@ -15,13 +15,15 @@ CREATE TABLE user (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    profile_picture VARCHAR(500),
+    password VARCHAR(255), -- Peut être NULL pour les utilisateurs inscrits via Google/Facebook
     phone_number VARCHAR(20),
+    profile_picture VARCHAR(500), -- Peut être NULL et sera ajouté plus tard
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP WITH TIME ZONE
-    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL,
+    last_login TIMESTAMP WITH TIME ZONE,
+    social_provider VARCHAR(50), -- 'google' ou 'facebook'
+    social_provider_id VARCHAR(255), -- ID unique fourni par Google/Facebook
+    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL
 );
 
 -- Table des propriétés

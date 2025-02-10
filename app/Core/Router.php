@@ -39,12 +39,9 @@ class Router
 
         //  home
 
-        dump(self::$Routes);
         $requestURI = str_replace('index.php', '', $requestURI);
         $requestURI = str_replace('Airbnb/public', '', $requestURI);
         $requestURI = trim($requestURI, '/');
-        dump($requestmethod);
-        dump($requestURI);
 
         if (isset(self::$Routes[$requestmethod][$requestURI])) {
 
@@ -60,11 +57,9 @@ class Router
             
                 // logic ;
                 [$controller, $method] = explode('@', $action);
-                dump($controller);
-                dump($method);
-                $controller = "App\\Core\\$controller";
+                
+                $controller = "App\\Controllers\\$controller";
 
-                // dump($controller);
 
                 if (!class_exists($controller)) {
 
