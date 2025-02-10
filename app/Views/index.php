@@ -1,3 +1,9 @@
+<?php
+use App\Config\Database;
+$db =  Database::getInstance();
+$conn = $db->connect();
+exit;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
