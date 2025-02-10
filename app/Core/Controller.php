@@ -18,7 +18,7 @@ class Controller
     public function register()
     {
 
-        include './App/View/Front/Auth/register.php';
+        include dirname(__DIR__) . '/Views/Front/Auth/register.php';
 
         exit;
 
