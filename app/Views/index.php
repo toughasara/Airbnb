@@ -113,9 +113,9 @@
                     <button class="hidden md:block hover:text-rose-500 transition-colors">
                         <i data-feather="heart" class="w-6 h-6"></i>
                     </button>
-                    <button class="px-4 py-2 text-rose-500 hover:text-rose-600 transition-colors">
+                    <a href="/register" class="px-4 py-2 text-rose-500 hover:text-rose-600 transition-colors">
                         Connexion
-                    </button>
+                    </a>
                     <button class="px-4 py-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white rounded-full hover:opacity-90 transition-opacity transform hover:-translate-y-0.5 duration-200">
                         Inscription
                     </button>
@@ -191,7 +191,7 @@
             </div>
         </div>
 
-       <!-- Featured Listings -->
+    <!-- Featured Listings -->
     <div class="container mx-auto px-4 py-20">
         <div class="flex justify-between items-center mb-12">
             <h2 class="text-4xl font-bold text-gray-800">

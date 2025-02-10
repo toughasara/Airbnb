@@ -1,5 +1,7 @@
+# image
 FROM php:8.4-apache
 
+COPY 000-default.conf /ect/apache2/sites-available/000-default.conf
 
 # Installer les dépendances nécessaires pour PostgreSQL
 RUN apt-get update && apt-get install -y libpq-dev
@@ -12,3 +14,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
+
