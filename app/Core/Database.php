@@ -1,52 +1,39 @@
 <?php
 
+namespace App\Config;
 
-class Database {
-    private $host;
-    private $port;
-    private $dbname;
-    private $user;
-    private $pass;
-    private $dbh;
-    private $stmt;
-    private $error;
+use PDO;
+use PDOException;
 
-    public function __construct() {
-        $this->host = getenv('DB_HOST');
-        $this->port = getenv('DB_PORT');
-        $this->dbname = getenv('DB_NAME');
-        $this->user = getenv('DB_USER');
-        $this->pass = getenv('DB_PASS');
+class Database { 
+    private $dbHost = "";
+    private $dbUsername = ""; 
+    private $dbPassword = ""; 
+    private $dbName = ""; 
+    
+    private $conn; 
+    private static $instance = null;
 
-        $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->dbname}";
-        $options = array(
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        );
+    private function __construct() { 
+        try { 
+            $this->conn = new PDO("mysql:host=".$this->dbHost.";dbname=".$this->dbName, $this->dbUsername, $this->dbPassword);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) { 
+            die("Failed to connect with MySQL: " . $e->getMessage()); 
+        } 
+    }
 
-        try {
-            $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-        } catch (PDOException $e) {
-            $this->error = $e->getMessage();
-            echo $this->error;
+    public static function getInstance() {
+        if (self::$instance == null) {
+            self::$instance = new Database();
         }
+        return self::$instance;
     }
 
-    public function query($sql) {
-        $this->stmt = $this->dbh->prepare($sql);
-    }
 
-    public function execute() {
-        return $this->stmt->execute();
-    }
 
-    public function resultSet() {
-        $this->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    public function single() {
-        $this->execute();
-        return $this->stmt->fetch(PDO::FETCH_OBJ);
-    }
+    public function connect() { 
+        return $this->conn;
+    } 
 }
+?>

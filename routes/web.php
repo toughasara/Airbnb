@@ -1,21 +1,22 @@
 <?php
 
+namespace routes;
 
-use Core\Router;
-
-
-Router::get('/', 'HomeController@index');
-
-Router::get('', 'HomeController@index');
+use App\Core\Router;
 
 
-Router::get('home', 'HomeController@index');
+Router::get('/', 'Controller@index');
 
-Router::get('register', 'HomeController@register');
+Router::get('', 'Controller@index');
 
-Router::get('contact', 'HomeController@contact');
 
-Router::post('products', 'HomeController@sendData');
+Router::get('home', 'Controller@index');
+
+Router::get('register', 'Controller@register');
+
+Router::get('contact', 'Controller@contact');
+
+Router::post('products', 'Controller@sendData');
 
 Router::get('about', function(){
     echo 'this is fun';
@@ -24,7 +25,7 @@ Router::get('about', function(){
 
 
 
-Router::post('home', 'HomeController@getUserById');
+Router::post('home', 'Controller@getUserById');
 
 
 

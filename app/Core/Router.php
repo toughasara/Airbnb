@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Core;
+namespace App\Core;
 
 
-// use App\Controller\HomeController;
+// use App\Core\Controller;
 
 
 class Router
@@ -16,20 +16,20 @@ class Router
     public static function get($requestURI, $action)
     {
 
-        self::$Routes['GET'][$requestURI] = $action;
+        self::$Routes['get'][$requestURI] = $action;
     }
 
     public static function post($requestURI, $action)
     {
 
-        self::$Routes['POST'][$requestURI] = $action;
+        self::$Routes['post'][$requestURI] = $action;
     }
 
 
     public static function put($requestURI, $action)
     {
 
-        self::$Routes['PUT'][$requestURI] = $action;
+        self::$Routes['put'][$requestURI] = $action;
     }
 
 
@@ -39,15 +39,16 @@ class Router
 
         //  home
 
+        dump(self::$Routes);
         $requestURI = str_replace('index.php', '', $requestURI);
         $requestURI = str_replace('Airbnb/public', '', $requestURI);
         $requestURI = trim($requestURI, '/');
-
+        dump($requestmethod);
+        dump($requestURI);
 
         if (isset(self::$Routes[$requestmethod][$requestURI])) {
 
             $action = self::$Routes[$requestmethod][$requestURI];
-
 
 
             if (is_callable($action)) {
@@ -56,16 +57,12 @@ class Router
 
 
             if (is_string($action)) {
-
+            
                 // logic ;
                 [$controller, $method] = explode('@', $action);
-
-                // dump($controller);
-                // dump($method);
-
-
+                dump($controller);
+                dump($method);
                 $controller = "App\\Core\\$controller";
-
 
                 // dump($controller);
 

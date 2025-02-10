@@ -1,15 +1,15 @@
 <?php 
 
-namespace App\Core\Controllers;
+namespace App\Core;
 
 
-class HomeController
+class Controller
 {
 
     public function index()
     {
 
-        include dirname(__DIR__) . '/View/pages/home.php';
+        include dirname(__DIR__) . '/Views/index.php';
 
         exit;
 
