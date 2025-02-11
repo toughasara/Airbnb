@@ -33,8 +33,18 @@ class Controller
         exit;
 
     }
+    public function housingoffer()
+    {
+
+        echo $this->twig->render('Front/');
+        exit;
+
+    }
+
 
 
 
 
 }
+
+

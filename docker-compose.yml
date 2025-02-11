@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: postgres_container
+    container_name: postgres_container_airbnb
     image: postgres   
     restart: always
     environment:
@@ -11,7 +11,7 @@ services:
       - "5432:5432"
 
   pgadmin:
-    container_name: pgadmin4_container_v2
+    container_name: pgadmin4_container_airbnb
     image: dpage/pgadmin4
     restart: always
     environment:
@@ -25,7 +25,7 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
-    container_name: php_container
+    container_name: php_container_airbnb
     restart: always
     volumes:
         - ../airbnb:/var/www/html
