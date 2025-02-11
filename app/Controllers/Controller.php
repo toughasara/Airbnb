@@ -36,7 +36,14 @@ class Controller
     public function housingoffer()
     {
 
-        echo $this->twig->render('Front/');
+        echo $this->twig->render('Front/housingoffers.twig');
+        exit;
+
+    }
+    public function articledescription()
+    {
+
+        echo $this->twig->render('Front/articledescription.twig');
         exit;
 
     }

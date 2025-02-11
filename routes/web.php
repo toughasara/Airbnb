@@ -9,6 +9,8 @@ Router::get('/', 'Controller@index');
 
 Router::get('', 'Controller@index');
 Router::get('housingoffer', 'Controller@housingoffer');
+Router::get('articledescription', 'Controller@articledescription');
+
 
 Router::get('home', 'Controller@index');
 
