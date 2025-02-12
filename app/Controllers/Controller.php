@@ -26,15 +26,6 @@ class Controller
 
     }
 
-    public function register()
-    {
-
-        echo $this->twig->render('Auth/register.twig');
-        exit;
-
-    }
-
-
 
 
 }
