@@ -35,11 +35,9 @@ Router::post('home', 'Controller@getUserById');
 
 
 
-
 Router::get('/reservation','ReservationController@showReservationForm');
 Router::post('/reservation/process', 'ReservationController@processReservation');
 Router::post('/reservation/confirm', 'ReservationController@confirmPayment');
-
 
 
 

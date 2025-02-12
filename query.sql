@@ -89,55 +89,55 @@ CREATE TABLE review (
     FOREIGN KEY (traveler_id) REFERENCES user(id) ON DELETE SET NULL
 );
 
--- Table des paiements
--- CREATE TABLE payments (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     booking_id UUID REFERENCES bookings(id),
---     amount DECIMAL(10, 2) NOT NULL,
---     payment_method VARCHAR(50),
---     transaction_id VARCHAR(255) UNIQUE,
---     payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
---     status VARCHAR(50) DEFAULT 'PENDING'
--- );
+Table des paiements
+CREATE TABLE payments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id UUID REFERENCES bookings(id),
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50),
+    transaction_id VARCHAR(255) UNIQUE,
+    payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'PENDING'
+);
 
--- Table des fils de conversation
--- CREATE TABLE conversation_threads (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     property_id UUID REFERENCES properties(id),
---     sender_id UUID REFERENCES users(id),
---     receiver_id UUID REFERENCES users(id),
---     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
---     last_message_at TIMESTAMP WITH TIME ZONE,
---     status VARCHAR(50) DEFAULT 'ACTIVE'
--- );
+Table des fils de conversation
+CREATE TABLE conversation_threads (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    property_id UUID REFERENCES properties(id),
+    sender_id UUID REFERENCES users(id),
+    receiver_id UUID REFERENCES users(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_message_at TIMESTAMP WITH TIME ZONE,
+    status VARCHAR(50) DEFAULT 'ACTIVE'
+);
 
--- Table des messages instantanés
--- CREATE TYPE message_type AS ENUM ('TEXT', 'BOOKING_REQUEST', 'BOOKING_CONFIRMATION', 'SYSTEM_NOTIFICATION');
+Table des messages instantanés
+CREATE TYPE message_type AS ENUM ('TEXT', 'BOOKING_REQUEST', 'BOOKING_CONFIRMATION', 'SYSTEM_NOTIFICATION');
 
--- CREATE TABLE instant_messages (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     conversation_thread_id UUID REFERENCES conversation_threads(id),
---     sender_id UUID REFERENCES users(id),
---     content TEXT NOT NULL,
---     message_type message_type DEFAULT 'TEXT',
---     sent_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
---     is_read BOOLEAN DEFAULT FALSE
--- );
+CREATE TABLE instant_messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    conversation_thread_id UUID REFERENCES conversation_threads(id),
+    sender_id UUID REFERENCES users(id),
+    content TEXT NOT NULL,
+    message_type message_type DEFAULT 'TEXT',
+    sent_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    is_read BOOLEAN DEFAULT FALSE
+);
 
--- Table des notifications de messages
--- CREATE TABLE message_notifications (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     message_id UUID REFERENCES instant_messages(id),
---     receiver_id UUID REFERENCES users(id),
---     notification_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
---     is_delivered BOOLEAN DEFAULT FALSE,
---     is_read BOOLEAN DEFAULT FALSE
--- );
+Table des notifications de messages
+CREATE TABLE message_notifications (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    message_id UUID REFERENCES instant_messages(id),
+    receiver_id UUID REFERENCES users(id),
+    notification_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    is_delivered BOOLEAN DEFAULT FALSE,
+    is_read BOOLEAN DEFAULT FALSE
+);
 
--- Index pour optimiser les performances
--- CREATE INDEX idx_users_email ON users(email);
--- CREATE INDEX idx_properties_owner ON properties(owner_id);
--- CREATE INDEX idx_bookings_property ON bookings(property_id);
--- CREATE INDEX idx_bookings_traveler ON bookings(traveler_id);
--- CREATE INDEX idx_reviews_property ON reviews(property_id);
--- CREATE INDEX idx_conversations_participants ON conversation_threads(sender_id, receiver_id);
+Index pour optimiser les performances
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_properties_owner ON properties(owner_id);
+CREATE INDEX idx_bookings_property ON bookings(property_id);
+CREATE INDEX idx_bookings_traveler ON bookings(traveler_id);
+CREATE INDEX idx_reviews_property ON reviews(property_id);
+CREATE INDEX idx_conversations_participants ON conversation_threads(sender_id, receiver_id);
