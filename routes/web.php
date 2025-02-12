@@ -34,3 +34,19 @@ Router::post('home', 'Controller@getUserById');
 
 
 
+////////Hmidouch Routes//////
+
+
+
+
+Router::get('/reservation','ReservationController@showReservationForm');
+Router::post('/reservation/process', 'ReservationController@processReservation');
+Router::post('/reservation/confirm', 'ReservationController@confirmPayment');
+
+
+
+
+
+
+
+//////////////fin de hmidouch/////////
