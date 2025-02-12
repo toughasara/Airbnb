@@ -22,6 +22,8 @@ class  DisplayPropertyController
 
         $rows = self::$DisplayDataModele->displayProperty();
         return $rows;
+
+    
         
     }
 

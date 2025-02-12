@@ -24,10 +24,6 @@ Router::post('products', 'Controller@sendData');
 
 Router::get('dashboard', 'Back\\AdminController@dashboard');
 
-Router::get('about', function(){
-    echo 'this is fun';
-    exit;
-});
 
 
 
@@ -52,3 +48,23 @@ Router::post('/reservation/confirm', 'ReservationController@confirmPayment');
 
 
 //////////////fin de hmidouch/////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// zakaria routes
+
+
+
+// fin zakaria routes

@@ -17,7 +17,12 @@ class PagesController
       
           $rows = self::$DisplayPropertyController->DisplayPropertyController();
 
-          
+          foreach($rows as $row ){
+
+
+            
+          }
+
 
 
     }
