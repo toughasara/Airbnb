@@ -14,7 +14,9 @@ Router::get('articledescription', 'Controller@articledescription');
 
 Router::get('home', 'Controller@index');
 
-Router::get('register', 'Controller@register');
+Router::get('register', 'Auth\\userController@register');
+
+Router::get('contenuinscription', 'Auth\\userController@contenuinscription');
 
 Router::get('contact', 'Controller@contact');
 
