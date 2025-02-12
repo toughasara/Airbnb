@@ -23,7 +23,7 @@ class Controller
         exit;
 
     }
-
+   
 
 
     // public function getUserById(){
