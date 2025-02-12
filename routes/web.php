@@ -22,6 +22,8 @@ Router::get('contact', 'Controller@contact');
 
 Router::post('products', 'Controller@sendData');
 
+Router::get('dashboard', 'Back\\AdminController@dashboard');
+
 Router::get('about', function(){
     echo 'this is fun';
     exit;
