@@ -1,4 +1,5 @@
 -- Création de la base de données
+
 CREATE DATABASE airbnb;
 
 -- Connexion à la base de données
@@ -99,6 +100,7 @@ CREATE TABLE review (
     UNIQUE(property_id, traveler_id),
     FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE SET NULL,
     FOREIGN KEY (traveler_id) REFERENCES "user"(id) ON DELETE SET NULL
+);
 );
 
 INSERT INTO role (title) VALUES

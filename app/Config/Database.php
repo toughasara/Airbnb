@@ -18,7 +18,7 @@ class Database {
         try { 
             $this->conn = new PDO("pgsql:host=".$_ENV['LOCALHOST'].";port=".$_ENV['DB_PORT'].";dbname=". $_ENV['DATABASE'], $_ENV['USER'], $_ENV['USER_PASSWORD']);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "ttttttttttttttttttttttttttt";
+            // echo "ttttttttttttttttttttttttttt";
         } catch (PDOException $e) { 
             die("Failed to connect with PostgreSQL: " . $e->getMessage()); 
         } 
