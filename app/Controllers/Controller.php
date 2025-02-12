@@ -2,15 +2,26 @@
 
 namespace App\Controllers;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Controller
 {
 
+    protected $twig;
+
+    public function __construct()
+    {
+        $loader = new FilesystemLoader(__DIR__ . '/../Views');
+        $this->twig = new Environment($loader, [
+            'cache' => false,
+        ]);
+    }
+    
     public function index()
     {
-
-        include dirname(__DIR__) . '/Views/index.php';
-
+                
+        echo $this->twig->render('index.twig');
         exit;
 
     }
@@ -18,41 +29,11 @@ class Controller
     public function register()
     {
 
-        include dirname(__DIR__) . '/Views/Auth/register.php';
-
+        echo $this->twig->render('Auth/register.twig');
         exit;
 
     }
    
-
-
-    // public function getUserById(){
-
-
-    //     if (isset($_POST['userId'])) {
-    //     $iduser = $_POST['userId'];
-    //     }
-
-
-    // // galtlik sara lmrakxiya bnt azli li sakna gdam m6 nasiraho lahlihdahom lala makayninx ma3lina:
-    
-
-    // $userModel= new usermodel();
-
-
-    // $userdata =  $userModel->getUserByIdModel($iduser);
-
-
-
-    // }
-
-
-  // <form action="home" method="POST">
-
-  //   <input type="text" name="userId" hidden value="{{id}}">
-
-  //   <button type="submit"></button>
-  // </form>
 
 
 

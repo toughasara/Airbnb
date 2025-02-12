@@ -12,6 +12,15 @@ class AdminController{
         exit;
 
     }
+    public function getAllUsers() {
+        $userModel = new UserModel();
+        $users = $userModel->getAllUsers();
+        $this->view('admin/proprelated/users', ['users' => $users]);
+    }
+    public function getAllAnnonces() {
+        $annonces = $this->annonceModel->getAllAnnonces();
+        $this->view('admin/proprelated/annonces', ['annonces' => $annonces]);
+    }
    
 
 
