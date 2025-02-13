@@ -3,13 +3,13 @@
 namespace App\Core;
 use App\Core\Error;
 
-class Validation
+class Validator
 {
     public static function validPassword($password)
     {
         $passwordPattern = "/^.{4,}$/";
         if (!preg_match($passwordPattern, $password)) {
-            ErrorsHandling::passwordinvalid();
+            Error::passwordinvalid();
             return false;
         }
         return true;
@@ -24,12 +24,12 @@ class Validation
         $emailPattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
 
         if (!preg_match($emailPattern, $email)) {
-            ErrorsHandling::emailinvalid();
+            Error::emailinvalid();
             return false;
         }
         
         if (!preg_match($passwordPattern, $password)) {
-            ErrorsHandling::passwordinvalid();
+            Error::passwordinvalid();
             return false;
         }
 
@@ -50,32 +50,32 @@ class Validation
         $phonePattern = "/^\+?[0-9]{10,15}$/";
 
         if($role == ""){
-            ErrorsHandling::roleinvalid();
+            Error::roleinvalid();
             return false;
         }
 
         if($first_name == ""){
-            ErrorsHandling::firstnameinvalid();
+            Error::firstnameinvalid();
             return false;
         }
 
         if($last_name == ""){
-            ErrorsHandling::lastnameinvalid();
+            Error::lastnameinvalid();
             return false;
         }
 
         if (!preg_match($emailPattern, $email)) {
-            ErrorsHandling::emailinvalid();
+            Error::emailinvalid();
             return false;
         }
 
         if (!preg_match($passwordPattern, $password)) {
-            ErrorsHandling::passwordinvalid();
+            Error::passwordinvalid();
             return false;
         }
 
         if (!preg_match($phonePattern, $phone_number)) {
-            ErrorsHandling::phoneinvalid();
+            Error::phoneinvalid();
             return false;
         }
 

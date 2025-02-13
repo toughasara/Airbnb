@@ -20,7 +20,7 @@ class User{
 
     public function __construct(
         $id = null, 
-        Role $role = null,
+        ?Role $role = null,
         $first_name = null, 
         $last_name = null, 
         $email = null, 

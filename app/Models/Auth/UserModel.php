@@ -4,7 +4,7 @@ namespace App\Models\Auth;
 use App\Config\Database;
 use PDO;
 
-class UserModele
+class UserModel
 {
 
     private $conn;
@@ -19,10 +19,11 @@ class UserModele
 
     public function findUserByEmail($user){
         try{
-            $query = "SELECT *  FROM user WHERE email = :email";
+            $query = 'SELECT *  FROM "user" WHERE email = :email';
 
+            $email = $user->getEmail();
             $stmt = $this->conn->prepare($query); 
-            $stmt->bindParam(":email", $user->getEmail());
+            $stmt->bindParam(":email", $email);
             $stmt->execute();
             
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -43,18 +44,27 @@ class UserModele
     public function createUser($user)
     {
         try {
-            $query = "INSERT INTO user (role_id, first_name, last_name, email, password, phone_number, profile_picture, status) 
-                        VALUES (:role_id, :first_name, :last_name, :email, :password, :phone_number, :profile_picture, :status)";
+            $query = 'INSERT INTO "user" (role_id, first_name, last_name, email, password, phone_number, profile_picture, status) 
+                        VALUES (:role_id, :first_name, :last_name, :email, :password, :phone_number, :profile_picture, :status)';
+
+            $role = $user->getRole()->getId();
+            $first_name = $user->getFirstName();
+            $last_name = $user->getLastName();
+            $email = $user->getEmail();
+            $password = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $phone_number = $user->getPhoneNumber();
+            $profile_picture = $user->getProfilePicture();
+            $status = $user->getStatus();
 
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(":role_id", $user->getRole()->getId());
-            $stmt->bindParam(":first_name", $user->getFirstName());
-            $stmt->bindParam(":last_name", $user->getLastName());
-            $stmt->bindParam(":email", $user->getEmail());
-            $stmt->bindParam(":password", password_hash($user->getPassword(), PASSWORD_DEFAULT));
-            $stmt->bindParam(":phone_number", $user->getPhoneNumber());
-            $stmt->bindParam(":profile_picture", $user->getProfilePicture());
-            $stmt->bindParam(":status", $user->getStatus());
+            $stmt->bindParam(":role_id", $role);
+            $stmt->bindParam(":first_name", $first_name);
+            $stmt->bindParam(":last_name", $last_name);
+            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":password", $password);
+            $stmt->bindParam(":phone_number", $phone_number);
+            $stmt->bindParam(":profile_picture", $profile_picture);
+            $stmt->bindParam(":status", $status);
             return $stmt->execute();
 
         } catch (PDOException $e) {

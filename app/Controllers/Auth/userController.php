@@ -10,8 +10,9 @@ use App\Core\view;
 // faire la redirection a partir de role
 use App\Core\Redirect; 
 
+use App\Classes\Role;
 use App\Classes\User;
-use App\Models\UserModel;
+use App\Models\Auth\UserModel;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -116,7 +117,7 @@ class userController
 
             $user = new User(null, null, null, $email, $password, null, null, null);
 
-            if (!Validation::validlogin($user))
+            if (!Validator::validlogin($user))
             {
                 echo $this->twig->render('Auth/login.twig', [
                     'authUrl' => $authUrl,
@@ -160,7 +161,7 @@ class userController
             $phone_number = $_POST['phone_number'] ?? '';
             $role = $_POST['role'] ?? 'TRAVELER'; // role par defeut
 
-            $role = new Role(null, $role_title);
+            $role = new Role(null, $role);
             $user = new User(null, $role, $first_name, $last_name, $email, $password, $phone_number, null, 'active');
 
             $fiundUser = $this->userModel->findUserByEmail($user);
@@ -170,7 +171,7 @@ class userController
                 Error::findemail();
             }
 
-            if (!Validation::validRegistration($user)) {
+            if (!Validator::validRegistration($user)) {
                 echo $this->twig->render('Auth/register.twig', [
                     'errors' => $_SESSION['error'] ?? null,
                     'authUrl' => $authUrl
@@ -216,7 +217,7 @@ class userController
         $client->setRedirectUri("http://localhost:85/contenuinscription");
 
         if (!isset($_GET["code"])) {
-            die("Error: No authorization code received.");
+            die("Error: coode kayn.");
         }
 
         $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
@@ -247,7 +248,6 @@ class userController
                 'first_name' => $first_name,
                 'last_name' => $last_name,
                 'email' => $email,
-                'profile_picture' => $pic
             ]);
             echo $this->twig->render('Auth/contenuinscri.twig');
         } else {
@@ -268,7 +268,7 @@ class userController
 
             $password = $_POST['password'] ?? '';
             $confirm_password = $_POST['confirm_password'] ?? '';
-            $role = $_POST['role'] ?? 'TRAVELER'; // Rôle par défaut
+            $role_title = $_POST['role'] ?? 'TRAVELER'; // Rôle par défaut
 
             // Valider les données
             if ($password !== $confirm_password) {
@@ -285,7 +285,8 @@ class userController
                 return;
             }
 
-            if (!Validation::validPassword($password)) {
+            if (Validator::validPassword($password)) {
+                dump("nooo valid");
                 Error::passwordinvalid();
                 echo $this->twig->render('Auth/contenuinscri.twig', [
                     'errors' => $_SESSION['error'] ?? null
@@ -294,9 +295,10 @@ class userController
                 return;
             }
 
+            $role = new Role(null, $role_title);
             $fiundUser = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
             
-            if ($this->userModel->createUser($user)) {
+            if ($this->userModel->createUser($fiundUser)) {
                 $fiundUser = $user;
                 Redirect::redirectPageHome($fiundUser);
             } 
