@@ -5,6 +5,16 @@ use App\Core\Error;
 
 class Validation
 {
+    public static function validPassword($password)
+    {
+        $passwordPattern = "/^.{4,}$/";
+        if (!preg_match($passwordPattern, $password)) {
+            ErrorsHandling::passwordinvalid();
+            return false;
+        }
+        return true;
+    }
+
     public static function validlogin($user)
     {
         $email = $user->getEmail();
@@ -20,6 +30,52 @@ class Validation
         
         if (!preg_match($passwordPattern, $password)) {
             ErrorsHandling::passwordinvalid();
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function validRegistration($role, $first_name, $last_name, $email, $password, $phone_number)
+    {
+        $role = $user->$role->getRole();
+        $first_name = $user->getFirstName();
+        $last_name = $user->getLastName();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $phone_number = $user->getPhoneNumber();
+
+        $emailPattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+        $passwordPattern = "/^.{4,}$/";
+        $phonePattern = "/^\+?[0-9]{10,15}$/";
+
+        if($role == ""){
+            ErrorsHandling::roleinvalid();
+            return false;
+        }
+
+        if($first_name == ""){
+            ErrorsHandling::firstnameinvalid();
+            return false;
+        }
+
+        if($last_name == ""){
+            ErrorsHandling::lastnameinvalid();
+            return false;
+        }
+
+        if (!preg_match($emailPattern, $email)) {
+            ErrorsHandling::emailinvalid();
+            return false;
+        }
+
+        if (!preg_match($passwordPattern, $password)) {
+            ErrorsHandling::passwordinvalid();
+            return false;
+        }
+
+        if (!preg_match($phonePattern, $phone_number)) {
+            ErrorsHandling::phoneinvalid();
             return false;
         }
 

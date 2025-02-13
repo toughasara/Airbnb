@@ -26,17 +26,14 @@ class Redirect
         switch ($role) {
             case 'ADMIN':
                 echo $this->twig->render('Back/index.twig', [
-                    'authUrl' => $authUrl
                 ]);
                 break;
             case 'OWNER':
                 echo $this->twig->render('Front/index.twig', [
-                    'authUrl' => $authUrl
                 ]);
                 break;
             case 'TRAVELER':
                 echo $this->twig->render('Front/index.twig', [
-                    'authUrl' => $authUrl
                 ]);
                 break;
             default:

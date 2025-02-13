@@ -22,6 +22,8 @@ Router::get('contenuinscription', 'Auth\\userController@contenuinscription');
 
 Router::get('pagehome', 'Auth\\userController@pagehome');
 
+Router::post('completeRegistration', 'Auth\\userController@completeRegistration');
+
 Router::get('contact', 'Controller@contact');
 
 Router::post('products', 'Controller@sendData');
