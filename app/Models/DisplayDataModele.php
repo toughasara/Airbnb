@@ -1,8 +1,10 @@
 <?php
-namespace App\Models\Front;
+namespace App\Models;
 
 use App\Config\Database;
 use PDO;
+
+
 class DisplayDataModele
 {
 
@@ -19,7 +21,7 @@ class DisplayDataModele
 
     public function displayProperty(){
     
-        $query = 'SELECT title,price_per_night,city,country from property 
+        $query = 'SELECT title,price_per_night as price,city,country from property 
         where is_validated = true ';
 
         $stmt = $this->conn->prepare($query);

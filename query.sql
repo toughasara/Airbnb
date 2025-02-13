@@ -101,7 +101,7 @@ CREATE TABLE review (
     FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE SET NULL,
     FOREIGN KEY (traveler_id) REFERENCES "user"(id) ON DELETE SET NULL
 );
-);
+
 
 INSERT INTO role (title) VALUES
 ('TRAVELER'),

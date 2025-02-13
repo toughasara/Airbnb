@@ -8,8 +8,7 @@ use App\Core\Router;
 Router::get('/', 'Controller@index');
 
 Router::get('', 'Controller@index');
-Router::get('housingoffer', 'Controller@housingoffer');
-Router::get('articledescription', 'Controller@articledescription');
+
 
 
 Router::get('home', 'Controller@index');
@@ -23,6 +22,7 @@ Router::get('contact', 'Controller@contact');
 Router::post('products', 'Controller@sendData');
 
 Router::get('dashboard', 'Back\\AdminController@dashboard');
+
 
 
 
@@ -64,7 +64,10 @@ Router::post('/reservation/confirm', 'ReservationController@confirmPayment');
 
 
 // zakaria routes
-
-
+Router::get('housingoffer', 'Controller@housingoffer');
+Router::get('articledescription', 'Controller@articledescription');
+Router::get('addannounce', 'Controller@addannounce');
+Router::get('updateannounce', 'Controller@updateannounce');
+Router::get('dashboardowner', 'Controller@dashboardowner');
 
 // fin zakaria routes
