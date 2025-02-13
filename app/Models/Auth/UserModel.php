@@ -1,31 +1,34 @@
 <?php
-
 namespace App\Models\Auth;
 
-use App\Classes\User;
-use App\Core\Database;
+use App\Config\Database;
 use PDO;
 
-class UserModel{
+class UserModele
+{
+
     private $conn;
 
-    public function __construct() {
-        $db = new Database();
-        $this->conn = $db->connection();
+    public function __construct()
+    {
+        
+        $db = Database::getInstance();
+        $this->conn = $db->connect();
+
     }
 
-    public function findUserByEmailAndPassword($email){
+    public function findUserByEmail($user){
         try{
             $query = "SELECT *  FROM utilisateurs WHERE email = :email";
 
             $stmt = $this->conn->prepare($query); 
-            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":email", $user->getEmail());
             $stmt->execute();
             
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($row) {
-                return new Utilisateur($row["id"],$row["nom"],$row["email"],$row["password"],$row["role"],$row["status"],$row["created_at"],$row["deleted_at"]);
+                return new User($row["id"],$row["role_id"],$row["first_name"],$row["last_name"],$row["email"],$row["password"],$row["phone_number"],$row["profile_picture"],$row["status"],$row["created_at"],$row["last_login"],$row["is_connected"]);
             } else {
                 return null;
             }
@@ -37,22 +40,26 @@ class UserModel{
     }
 
 
-    public function Registre($utilisateur){
-        $name = $utilisateur->getNom();
-        $email = $utilisateur->getEmail();
-        $password = $utilisateur->getPassword();
-        $role = $utilisateur->getRole();
-        $status = $utilisateur->getStatus();
+    public function displayProperty(){
+    
+        $query = 'SELECT title,price_per_night,city,country from property 
+        where is_validated = true ';
 
-        $query = "INSERT INTO utilisateurs (nom, email, password, role, status) 
-                VALUES (:nom, :email, :password, :role, :status);";
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(':nom', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':status', $status);
         $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if(!$rows){
+
+            return null;
+
+        }
+        else{
+
+            return $rows;
+
+        }
+
     }
+
+
 }
