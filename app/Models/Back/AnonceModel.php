@@ -5,7 +5,7 @@ namespace App\Models\Back;
 use App\Config\Database;
 use PDO;
 
-class UserModel
+class AnonceModel
 {
 
     private  $conn;
@@ -15,9 +15,9 @@ class UserModel
         $this->conn = $db->connect();
     }
 
-    public function getAllUsers()
+    public function getAllAnnonces()
     {
-        $query = "SELECT * FROM user";
+        $query = "SELECT * FROM property";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

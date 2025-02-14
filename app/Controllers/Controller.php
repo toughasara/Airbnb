@@ -5,54 +5,44 @@ namespace App\Controllers;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class Controller
+class Controller 
 {
-
     protected $twig;
 
     public function __construct()
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../Views');
+        $loader = new FilesystemLoader(__DIR__ . '/../Views'); // مجلد القوالب
         $this->twig = new Environment($loader, [
             'cache' => false,
+            'debug' => true
         ]);
     }
-    
+
+    public function render($template, $data = [])
+    {
+        echo $this->twig->render($template, $data);
+        exit;
+    }
+
     public function index()
     {
-                
-        echo $this->twig->render('index.twig');
-        exit;
-
+        $this->render('index.twig');
     }
 
     public function register()
     {
-
-        echo $this->twig->render('Auth/register.twig');
-        exit;
-
+        $this->render('Auth/register.twig');
     }
+
     public function housingoffer()
     {
-
-        echo $this->twig->render('Front/housingoffers.twig');
-        exit;
-
+        $this->render('Front/housingoffers.twig');
     }
+
     public function articledescription()
     {
-
-        echo $this->twig->render('Front/articledescription.twig');
-        exit;
-
+        $this->render('Front/articledescription.twig');
     }
+
    
-
-
-
-
 }
-
-
-
