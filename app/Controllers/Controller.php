@@ -5,13 +5,13 @@ namespace App\Controllers;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use App\Controllers\Front\Travler\DisplayPropertyController;
-
+use App\Controllers\Front\Owner\AddAnnounceController;
 class Controller
 {
 
     protected $twig;
     public static $DisplayPropertyController ;
-
+    protected static $addannounce ;
     public function __construct()
     {
 
@@ -57,6 +57,12 @@ class Controller
     }   
      public function addannounce()
     {
+        
+        if(isset($_POST['addAnnounce'])){
+            $id = 2 ;
+            $addObj = new AddAnnounceController;
+            $addObj->addAnnounce($id);
+        }
 
         echo $this->twig->render('Front/owner/create_announcement.twig');
         exit;
@@ -76,6 +82,13 @@ class Controller
         exit;
 
     }
+    // public function OwnerRequestsController()
+    // {
+
+    //     echo $this->twig->render('../Controllers/Front/Owner/OwnerRequestsController.php');
+    //     exit;
+
+    // }
     
 
 

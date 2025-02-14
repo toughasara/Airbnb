@@ -77,7 +77,7 @@ class Router
 
 
                 $objectController = new $controller();
-
+                // dump("end");
 
                 return $objectController->$method();
 

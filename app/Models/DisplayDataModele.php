@@ -22,7 +22,7 @@ class DisplayDataModele
     public function displayProperty(){
     
         $query = 'SELECT title,price_per_night as price,city,country from property 
-        where is_validated = true ';
+        where is_validated = true';
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

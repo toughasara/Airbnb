@@ -64,10 +64,13 @@ Router::post('/reservation/confirm', 'ReservationController@confirmPayment');
 
 
 // zakaria routes
+
 Router::get('housingoffer', 'Controller@housingoffer');
 Router::get('articledescription', 'Controller@articledescription');
 Router::get('addannounce', 'Controller@addannounce');
+Router::post('addannounce', 'Controller@addannounce');
 Router::get('updateannounce', 'Controller@updateannounce');
 Router::get('dashboardowner', 'Controller@dashboardowner');
+Router::post('OwnerRequestsController', 'Controller@OwnerRequestsController');
 
 // fin zakaria routes
