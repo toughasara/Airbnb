@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa Vue Mer - LuxStay</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .gradient-border {
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #FF6B6B, #FFB88C) 1;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.03);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(to right, #FF6B6B, #FFB88C);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-50 to-orange-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect border-b border-white border-opacity-20">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <i data-feather="home" class="w-8 h-8 text-rose-500"></i>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-orange-500">
+                        LuxStay
+                    </span>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-gray-700 hover:text-rose-500 transition-colors">Accueil</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-rose-500 transition-colors">Destinations</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-rose-500 transition-colors">À propos</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-rose-500 transition-colors">Contact</a>
+                </div>
+
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                    <a href="/login" class="px-4 py-2 text-rose-500 hover:text-rose-600 transition-colors">
+                        Connexion
+                    </a>
+                    <button class="px-4 py-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white rounded-full hover:opacity-90 transition-opacity transform hover:-translate-y-0.5 duration-200">
+                        Inscription
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 container mx-auto px-4">
+        <!-- Property Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                Villa Vue Mer
+            </h1>
+            <div class="flex items-center space-x-2 text-gray-600">
+                <i data-feather="map-pin" class="w-4 h-4"></i>
+                <span>Nice, France</span>
+            </div>
+        </div>
+
+        <!-- Property Images Carousel -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="rounded-2xl overflow-hidden">
+                <img src="/api/placeholder/800/600" alt="Villa Vue Mer" class="w-full h-96 object-cover">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="rounded-2xl overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Villa Vue Mer" class="w-full h-48 object-cover">
+                </div>
+                <div class="rounded-2xl overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Villa Vue Mer" class="w-full h-48 object-cover">
+                </div>
+                <div class="rounded-2xl overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Villa Vue Mer" class="w-full h-48 object-cover">
+                </div>
+                <div class="rounded-2xl overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Villa Vue Mer" class="w-full h-48 object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Details -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Description and Features -->
+            <div class="lg:col-span-2">
+                <div class="glass-effect rounded-2xl shadow-2xl p-6 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                        Description
+                    </h2>
+                    <p class="text-gray-600 mb-4">
+                        Cette magnifique villa offre une vue imprenable sur la mer Méditerranée. Située à Nice, elle est parfaite pour des vacances inoubliables en famille ou entre amis. La propriété dispose de 4 chambres, 3 salles de bain, une piscine privée et un grand jardin.
+                    </p>
+                    <p class="text-gray-600">
+                        Profitez des commodités modernes telles que la climatisation, une cuisine entièrement équipée, et un accès direct à la plage. Idéal pour ceux qui cherchent à se détendre dans un cadre luxueux.
+                    </p>
+                </div>
+
+                <!-- Amenities Section -->
+                <div class="glass-effect rounded-2xl shadow-2xl p-6 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                        Équipements
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="wifi" class="w-5 h-5 text-rose-500"></i>
+                            <span class="text-gray-600">Wi-Fi gratuit</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="tv" class="w-5 h-5 text-rose-500"></i>
+                            <span class="text-gray-600">Télévision</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="coffee" class="w-5 h-5 text-rose-500"></i>
+                            <span class="text-gray-600">Cafetière</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="umbrella" class="w-5 h-5 text-rose-500"></i>
+                            <span class="text-gray-600">Parasol et transats</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="parking" class="w-5 h-5 text-rose-500"></i>
+                            <span class="text-gray-600">Parking privé</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-feather="wind" class="w-5 h-5 text-rose-500"></i>
+                            <span class="text-gray-600">Climatisation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Booking Card -->
+            <div class="glass-effect rounded-2xl shadow-2xl p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    Réserver
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Prix par nuit</span>
+                        <span class="text-2xl font-bold text-rose-500">250€</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Frais de service</span>
+                        <span class="text-gray-600">20€</span>
+                    </div>
+                    <div class="border-t pt-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Total</span>
+                            <span class="text-2xl font-bold text-rose-500">270€</span>
+                        </div>
+                    </div>
+<a href="/reservation" class="w-full block text-center bg-gradient-to-r from-rose-500 to-orange-500 text-white py-3 px-6 rounded-xl hover:opacity-90 transition-opacity transform hover:-translate-y-0.5 duration-200">
+    Réserver maintenant
+</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-rose-50 to-orange-50 border-t border-white border-opacity-20 mt-20">
+        <div class="container mx-auto px-4 py-12">
+            <div class="text-center text-gray-600">
+                <p>&copy; 2023 LuxStay. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
