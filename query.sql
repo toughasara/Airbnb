@@ -102,7 +102,10 @@ CREATE TABLE review (
     FOREIGN KEY (traveler_id) REFERENCES "user"(id) ON DELETE SET NULL
 );
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7102472fa7427b130885d70293d7d9b55939d507
 INSERT INTO role (title) VALUES
 ('TRAVELER'),
 ('OWNER'),
@@ -129,9 +132,6 @@ INSERT INTO booking (property_id, traveler_id, check_in_date, check_out_date, gu
 (1, 1, '2023-10-18', '2023-10-20', 2, 144.00, 'CONFIRMED'),
 (2, 1, '2023-11-10', '2023-11-15', 4, 600.00, 'PENDING');
 
-INSERT INTO review (property_id, traveler_id, rating, comment) VALUES
-(1, 1, 5, 'Super séjour, le studio est parfaitement situé et très confortable.'),
-(2, 1, 4, 'Très belle maison, mais un peu difficile à trouver.');
 Table des paiements
 CREATE TABLE payments (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -142,6 +142,32 @@ CREATE TABLE payments (
     payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50) DEFAULT 'PENDING'
 );
+INSERT INTO review (property_id, traveler_id, rating, comment) VALUES
+(1, 1, 5, 'Super séjour, le studio est parfaitement situé et très confortable.'),
+(2, 1, 4, 'Très belle maison, mais un peu difficile à trouver.');
+<<<<<<< HEAD
+Table des paiements
+CREATE TABLE payments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id UUID REFERENCES bookings(id),
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50),
+    transaction_id VARCHAR(255) UNIQUE,
+    payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'PENDING'
+);
+=======
+-- Table des paiements
+-- CREATE TABLE payments (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     booking_id UUID REFERENCES bookings(id),
+--     amount DECIMAL(10, 2) NOT NULL,
+--     payment_method VARCHAR(50),
+--     transaction_id VARCHAR(255) UNIQUE,
+--     payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+--     status VARCHAR(50) DEFAULT 'PENDING'
+-- );
+>>>>>>> 7102472fa7427b130885d70293d7d9b55939d507
 
 Table des fils de conversation
 CREATE TABLE conversation_threads (
