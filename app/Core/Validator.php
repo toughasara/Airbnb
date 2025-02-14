@@ -36,9 +36,9 @@ class Validator
         return true;
     }
 
-    public static function validRegistration($role, $first_name, $last_name, $email, $password, $phone_number)
+    public static function validRegistration($user)
     {
-        $role = $user->$role->getRole();
+        $role = $user->getRole()->getTitle();
         $first_name = $user->getFirstName();
         $last_name = $user->getLastName();
         $email = $user->getEmail();

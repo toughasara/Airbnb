@@ -1,8 +1,12 @@
 <?php
 namespace App\Models\Auth;
 
+
 use App\Config\Database;
+use App\Classes\Role; 
+use App\Classes\User;
 use PDO;
+use PDOException;
 
 class UserModel
 {
@@ -17,11 +21,13 @@ class UserModel
 
     }
 
+    
     public function findUserByEmail($user){
         try{
             $query = 'SELECT *  FROM "user" WHERE email = :email';
 
             $email = $user->getEmail();
+            dump($email);
             $stmt = $this->conn->prepare($query); 
             $stmt->bindParam(":email", $email);
             $stmt->execute();
@@ -40,6 +46,8 @@ class UserModel
             return null;
         }
     }
+
+    $user = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
 
     public function createUser($user)
     {

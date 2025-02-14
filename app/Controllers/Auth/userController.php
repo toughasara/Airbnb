@@ -25,6 +25,8 @@ class userController
 
     protected $twig;
     private $userModel;
+    private $client; 
+    private $authUrl;
 
     public function __construct()
     {
@@ -33,24 +35,23 @@ class userController
         $this->twig = new Environment($loader, [
             'cache' => false,
         ]);
+        $this->client = new Client;
+        $this->client->setClientId("735576740631-l6ff1ajkiuij5m9lkk76visuq1l0mh0e.apps.googleusercontent.com");
+        $this->client->setClientSecret("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");
+        $this->client->setRedirectUri("http://localhost:85/contenuinscription");
+        $this->client->addscope("email");
+        $this->client->addscope("profile");
+        $this->authUrl = $this->client->createAuthUrl();
     }
+
+        
 
     // login 
     public function connectez()
     {
-        $client = new Client;
-
-        $client->setClientId("735576740631-l6ff1ajkiuij5m9lkk76visuq1l0mh0e.apps.googleusercontent.com");
-        $client->setClientSecret("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");
-        $client->setRedirectUri("http://localhost:85/contenuinscription");
-
-        $client->addscope("email");
-        $client->addscope("profile");
-
-        $authUrl = $client->createAuthUrl();
 
         echo $this->twig->render('Auth/login.twig', [
-            'authUrl' => $authUrl
+            'authUrl' => $this->authUrl
         ]);
         
         // echo $this->twig->render('Auth/register.twig', $authUrl);
@@ -63,11 +64,6 @@ class userController
         // login avec google
         if ($_SERVER['REQUEST_METHOD'] === 'Get'){
 
-            $client = new Client;
-
-            $client->setClientId("735576740631-l6ff1ajkiuij5m9lkk76visuq1l0mh0e.apps.googleusercontent.com");
-            $client->setClientSecret("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");
-            $client->setRedirectUri("http://localhost:85/contenuinscription");
 
             if (!isset($_GET["code"])) {
                 die("Error: No authorization code received.");
@@ -103,7 +99,7 @@ class userController
             {
                 Error::erreurgoogle();
                 echo $this->twig->render('Auth/login.twig', [
-                    'authUrl' => $authUrl,
+                    'authUrl' => $this->authUrl,
                     'errors' => $_SESSION['error'] ?? null,
                 ]);
                 unset($_SESSION['error']); 
@@ -115,12 +111,13 @@ class userController
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            $user = new User(null, null, null, $email, $password, null, null, null);
+            $user = new User(null, null, null, null, $email, $password, null, null, null);
 
             if (!Validator::validlogin($user))
             {
+                dump("non valider");
                 echo $this->twig->render('Auth/login.twig', [
-                    'authUrl' => $authUrl,
+                    'authUrl' => $this->authUrl,
                     'errors' => $_SESSION['error'] ?? null,
                     'email' => $email,
                 ]);
@@ -129,23 +126,26 @@ class userController
             }
 
             $fiundUser = $this->userModel->findUserByEmail($user);
+            // $passwordhash = password_hash($password, PASSWORD_DEFAULT);
 
             if ($fiundUser && password_verify($password, $fiundUser->getPassword()))
             {
+                dump("find");
                 Redirect::redirectPageHome($fiundUser);
             }
             else
             {
+                dump("note find");
                 Error::affichiererreur();
                 echo $this->twig->render('Auth/login.twig', [
-                    'authUrl' => $authUrl,
+                    'authUrl' => $this->authUrl,
                     'errors' => $_SESSION['error'] ?? null,
                 ]);
                 unset($_SESSION['error']); 
             }
         } else {
             echo $this->twig->render('Auth/register.twig', [
-                'authUrl' => $authUrl
+                'authUrl' => $this->authUrl
             ]);
         }
     }
@@ -153,7 +153,9 @@ class userController
     // inscription via formulaire
     public function register()
     {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // dump("pooost");
             $first_name = $_POST['first_name'] ?? '';
             $last_name = $_POST['last_name'] ?? '';
             $email = $_POST['email'] ?? '';
@@ -171,39 +173,35 @@ class userController
                 Error::findemail();
             }
 
-            if (!Validator::validRegistration($user)) {
+            if (Validator::validRegistration($user)) {
+                dump("nom vallider");
                 echo $this->twig->render('Auth/register.twig', [
                     'errors' => $_SESSION['error'] ?? null,
-                    'authUrl' => $authUrl
+                    'authUrl' => $this->authUrl
                 ]);
                 unset($_SESSION['error']);
                 return;
             }
 
             if ($this->userModel->createUser($user)) {
+                dump("il est ajouter au base de donner ");
                 echo $this->twig->render('Auth/login.twig', [
-                    'authUrl' => $authUrl
+                    'authUrl' => $this->authUrl
                 ]);
             } 
             else {
+                dump("n'a pas ajouter au base de donner");
                 Error::affichiererreur();
                 echo $this->twig->render('Auth/register.twig', [
                     'errors' => $_SESSION['error'] ?? null,
-                    'authUrl' => $authUrl
+                    'authUrl' => $this->authUrl
                 ]);
                 unset($_SESSION['error']);
             }
         } else {
-            $client = new Client;
-            $client->setClientId("735576740631-l6ff1ajkiuij5m9lkk76visuq1l0mh0e.apps.googleusercontent.com");
-            $client->setClientSecret("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");
-            $client->setRedirectUri("http://localhost:85/contenuinscription");
-            $client->addscope("email");
-            $client->addscope("profile");
-            $authUrl = $client->createAuthUrl();
 
             echo $this->twig->render('Auth/register.twig', [
-                'authUrl' => $authUrl
+                'authUrl' => $this->authUrl
             ]);
         }
     }
@@ -211,16 +209,12 @@ class userController
     // inscription via Google 
     public function contenuinscription()
     {
-        $client = new Client;
-        $client->setClientId("735576740631-l6ff1ajkiuij5m9lkk76visuq1l0mh0e.apps.googleusercontent.com");
-        $client->setClientSecret("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");
-        $client->setRedirectUri("http://localhost:85/contenuinscription");
 
         if (!isset($_GET["code"])) {
             die("Error: coode kayn.");
         }
 
-        $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
+        $token = $this->client->fetchAccessTokenWithAuthCode($_GET["code"]);
 
         if (isset($token['error'])) {
             die("Google OAuth Error: " . $token['error']);
@@ -230,9 +224,9 @@ class userController
             die("Error: Access token not received.");
         }
 
-        $client->setAccessToken($token['access_token']);
+        $this->client->setAccessToken($token['access_token']);
 
-        $oauth = new Google_Service_Oauth2($client);
+        $oauth = new Google_Service_Oauth2($this->client);
         $userinfo = $oauth->userinfo->get();
 
         $first_name = $userinfo->given_name;
@@ -242,7 +236,8 @@ class userController
         $user = new User(null, null, $first_name, $last_name, $email, null, null, null, null);
         $fincAccount = $this->userModel->findUserByEmail($user);
 
-        if (!$fincAccount) {
+        if (!$fincAccount instanceof User) {
+            dump("makaynch");
             // Stocker les données dans la session
             Session::set('google_user', [
                 'first_name' => $first_name,
@@ -260,15 +255,24 @@ class userController
     public function completeRegistration()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $googleUser = Session::get('google_user');
 
             $first_name = $googleUser['first_name'];
             $last_name = $googleUser['last_name'];
             $email = $googleUser['email'];
 
+            // dump($first_name);
+            // dump($last_name);
+            // dump($email);
+
             $password = $_POST['password'] ?? '';
             $confirm_password = $_POST['confirm_password'] ?? '';
-            $role_title = $_POST['role'] ?? 'TRAVELER'; // Rôle par défaut
+            $role = $_POST['role'] ?? 'TRAVELER'; // Rôle par défaut
+
+            dump($password);
+            dump($confirm_password);
+            dump($role);
 
             // Valider les données
             if ($password !== $confirm_password) {
@@ -285,7 +289,7 @@ class userController
                 return;
             }
 
-            if (Validator::validPassword($password)) {
+            if (!Validator::validPassword($password)) {
                 dump("nooo valid");
                 Error::passwordinvalid();
                 echo $this->twig->render('Auth/contenuinscri.twig', [
@@ -295,14 +299,16 @@ class userController
                 return;
             }
 
-            $role = new Role(null, $role_title);
-            $fiundUser = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
+            $role = new Role($role, null);
+            $user = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
             
-            if ($this->userModel->createUser($fiundUser)) {
-                $fiundUser = $user;
-                Redirect::redirectPageHome($fiundUser);
+            // dump($fiundUser);
+            if ($this->userModel->createUser($user)) {
+                dump("ajouter au base de donner");
+                Redirect::redirectPageHome($user);
             } 
             else {
+                dump("n'a pas ajouter au base de donner");
                 Error::affichiererreur();
                 echo $this->twig->render('Auth/contenuinscri.twig', [
                     'errors' => $_SESSION['error'] ?? null,

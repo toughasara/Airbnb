@@ -16,11 +16,13 @@ Router::get('home', 'Controller@index');
 
 Router::get('register', 'Auth\\userController@register');
 
+Router::post('register', 'Auth\\userController@register');
+
 Router::get('connectez', 'Auth\\userController@connectez');
 
 Router::get('contenuinscription', 'Auth\\userController@contenuinscription');
 
-Router::get('pagehome', 'Auth\\userController@pagehome');
+Router::post('pagehome', 'Auth\\userController@pagehome');
 
 Router::post('completeRegistration', 'Auth\\userController@completeRegistration');
 

@@ -59,6 +59,13 @@ class Error {
         ];
         return ;
     }
+    
+    public static function phoneinvalid() {
+        $_SESSION['error'] = [
+            'message'=> 'veullez remplir votre numero de telephone.'
+        ];
+        return ;
+    }
 
     public static function passwordinvalid() {
         $_SESSION['error'] = [
