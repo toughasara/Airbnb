@@ -14,26 +14,25 @@ class Redirect
 
     public function __construct()
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../../Views');
+        $loader = new FilesystemLoader(__DIR__ . '/../Views');
         $this->twig = new Environment($loader, [
             'cache' => false, 
         ]);
     }
     
-    public static function redirectPageHome($fiundUser)
+    public function redirectPageHome($fiundUser)
     {
         $role = $fiundUser->getRole()->getId();
-        dump($role);
 
         switch ($role) {
-            case '3':
-                echo $this->twig->render('Back/index.twig');
+            case 3:
+                echo $this->twig->render('Back/index.php');
                 break;
-            case '2':
-                echo $this->twig->render('Front/index.twig');
+            case 2:
+                echo $this->twig->render('Front/index.php');
                 break;
-            case '1':
-                echo $this->twig->render('Front/index.twig');
+            case 1:
+                echo $this->twig->render('Front/kray.php');
                 break;
             default:
                 echo $this->twig->render('errors/404.twig');

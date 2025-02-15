@@ -27,7 +27,6 @@ class UserModel
             $query = 'SELECT *  FROM "user" WHERE email = :email';
 
             $email = $user->getEmail();
-            dump($email);
             $stmt = $this->conn->prepare($query); 
             $stmt->bindParam(":email", $email);
             $stmt->execute();
@@ -46,8 +45,6 @@ class UserModel
             return null;
         }
     }
-
-    $user = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
 
     public function createUser($user)
     {

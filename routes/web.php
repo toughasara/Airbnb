@@ -22,7 +22,9 @@ Router::get('connectez', 'Auth\\userController@connectez');
 
 Router::get('contenuinscription', 'Auth\\userController@contenuinscription');
 
-Router::post('pagehome', 'Auth\\userController@pagehome');
+Router::post('login', 'Auth\\userController@login');
+
+Router::get('pagehome', 'Controller@pagehome');
 
 Router::post('completeRegistration', 'Auth\\userController@completeRegistration');
 

@@ -27,6 +27,7 @@ class userController
     private $userModel;
     private $client; 
     private $authUrl;
+    private $redirect;
 
     public function __construct()
     {
@@ -35,6 +36,7 @@ class userController
         $this->twig = new Environment($loader, [
             'cache' => false,
         ]);
+        $this->redirect = new Redirect();
         $this->client = new Client;
         $this->client->setClientId("735576740631-l6ff1ajkiuij5m9lkk76visuq1l0mh0e.apps.googleusercontent.com");
         $this->client->setClientSecret("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");
@@ -44,8 +46,6 @@ class userController
         $this->authUrl = $this->client->createAuthUrl();
     }
 
-        
-
     // login 
     public function connectez()
     {
@@ -53,23 +53,21 @@ class userController
         echo $this->twig->render('Auth/login.twig', [
             'authUrl' => $this->authUrl
         ]);
-        
-        // echo $this->twig->render('Auth/register.twig', $authUrl);
         exit;
     }
 
     // login 
-    public function pagehome()
+    public function login()
     {
         // login avec google
-        if ($_SERVER['REQUEST_METHOD'] === 'Get'){
+        if ($_SERVER['REQUEST_METHOD'] === 'GET'){
 
 
             if (!isset($_GET["code"])) {
                 die("Error: No authorization code received.");
             }
 
-            $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
+            $token = $this->client->fetchAccessTokenWithAuthCode($_GET["code"]);
 
             if (isset($token['error'])) {
                 die("Google OAuth Error: " . $token['error']);
@@ -79,9 +77,9 @@ class userController
                 die("Error: Access token not received.");
             }
 
-            $client->setAccessToken($token['access_token']);
+            $this->client->setAccessToken($token['access_token']);
 
-            $oauth = new Google_Service_Oauth2($client);
+            $oauth = new Google_Service_Oauth2($this->client);
 
             $userinfo = $oauth->userinfo->get();
 
@@ -93,7 +91,7 @@ class userController
 
             if ($fiundUser)
             {
-                Redirect::redirectPageHome($fiundUser);
+                $this->redirect->redirectPageHome($fiundUser);
             } 
             else
             {
@@ -115,7 +113,6 @@ class userController
 
             if (!Validator::validlogin($user))
             {
-                dump("non valider");
                 echo $this->twig->render('Auth/login.twig', [
                     'authUrl' => $this->authUrl,
                     'errors' => $_SESSION['error'] ?? null,
@@ -130,12 +127,10 @@ class userController
 
             if ($fiundUser && password_verify($password, $fiundUser->getPassword()))
             {
-                dump("find");
-                Redirect::redirectPageHome($fiundUser);
+                $this->redirect->redirectPageHome($fiundUser);
             }
             else
             {
-                dump("note find");
                 Error::affichiererreur();
                 echo $this->twig->render('Auth/login.twig', [
                     'authUrl' => $this->authUrl,
@@ -155,15 +150,14 @@ class userController
     {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // dump("pooost");
             $first_name = $_POST['first_name'] ?? '';
             $last_name = $_POST['last_name'] ?? '';
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
             $phone_number = $_POST['phone_number'] ?? '';
-            $role = $_POST['role'] ?? 'TRAVELER'; // role par defeut
+            $role = $_POST['role'] ?? 'TRAVELER'; 
 
-            $role = new Role(null, $role);
+            $role = new Role($role, null);
             $user = new User(null, $role, $first_name, $last_name, $email, $password, $phone_number, null, 'active');
 
             $fiundUser = $this->userModel->findUserByEmail($user);
@@ -174,7 +168,6 @@ class userController
             }
 
             if (Validator::validRegistration($user)) {
-                dump("nom vallider");
                 echo $this->twig->render('Auth/register.twig', [
                     'errors' => $_SESSION['error'] ?? null,
                     'authUrl' => $this->authUrl
@@ -184,13 +177,11 @@ class userController
             }
 
             if ($this->userModel->createUser($user)) {
-                dump("il est ajouter au base de donner ");
                 echo $this->twig->render('Auth/login.twig', [
                     'authUrl' => $this->authUrl
                 ]);
             } 
             else {
-                dump("n'a pas ajouter au base de donner");
                 Error::affichiererreur();
                 echo $this->twig->render('Auth/register.twig', [
                     'errors' => $_SESSION['error'] ?? null,
@@ -237,7 +228,6 @@ class userController
         $fincAccount = $this->userModel->findUserByEmail($user);
 
         if (!$fincAccount instanceof User) {
-            dump("makaynch");
             // Stocker les données dans la session
             Session::set('google_user', [
                 'first_name' => $first_name,
@@ -247,7 +237,7 @@ class userController
             echo $this->twig->render('Auth/contenuinscri.twig');
         } else {
             Session::createUserSession($fincAccount);
-            Redirect::redirectPageHome($fincAccount);
+            $this->redirect->redirectPageHome($fincAccount);
         }
     }
 
@@ -262,17 +252,9 @@ class userController
             $last_name = $googleUser['last_name'];
             $email = $googleUser['email'];
 
-            // dump($first_name);
-            // dump($last_name);
-            // dump($email);
-
             $password = $_POST['password'] ?? '';
             $confirm_password = $_POST['confirm_password'] ?? '';
             $role = $_POST['role'] ?? 'TRAVELER'; // Rôle par défaut
-
-            dump($password);
-            dump($confirm_password);
-            dump($role);
 
             // Valider les données
             if ($password !== $confirm_password) {
@@ -290,7 +272,6 @@ class userController
             }
 
             if (!Validator::validPassword($password)) {
-                dump("nooo valid");
                 Error::passwordinvalid();
                 echo $this->twig->render('Auth/contenuinscri.twig', [
                     'errors' => $_SESSION['error'] ?? null
@@ -302,13 +283,10 @@ class userController
             $role = new Role($role, null);
             $user = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
             
-            // dump($fiundUser);
             if ($this->userModel->createUser($user)) {
-                dump("ajouter au base de donner");
-                Redirect::redirectPageHome($user);
+                $this->redirect->redirectPageHome($user);
             } 
             else {
-                dump("n'a pas ajouter au base de donner");
                 Error::affichiererreur();
                 echo $this->twig->render('Auth/contenuinscri.twig', [
                     'errors' => $_SESSION['error'] ?? null,
