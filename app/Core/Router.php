@@ -43,7 +43,6 @@ class Router
         $requestURI = str_replace('index.php', '', $requestURI);
         $requestURI = str_replace('Airbnb/public', '', $requestURI);
         $requestURI = trim($requestURI, '/');
-
         if (isset(self::$Routes[$requestmethod][$requestURI])) {
 
             $action = self::$Routes[$requestmethod][$requestURI];
