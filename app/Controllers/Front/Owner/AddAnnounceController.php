@@ -15,10 +15,10 @@ class AddAnnounceController{
 
     }
 
-    public function addAnnounce($id){
+    public function addAnnounce($id,$title,$description,$category,$price_per_night,$max_guests,$amenities,$photos,$address,$city,$country){
      
 
-        self::$AddAnnounceModel->addAnnounce($id);
+        self::$AddAnnounceModel->addAnnounce($id,$title,$description,$category,$price_per_night,$max_guests,$amenities,$photos,$address,$city,$country);
         
     }
 

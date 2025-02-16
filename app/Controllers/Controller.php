@@ -57,11 +57,20 @@ class Controller
     }   
      public function addannounce()
     {
-        
         if(isset($_POST['addAnnounce'])){
-            $id = 2 ;
-            $addObj = new AddAnnounceController;
-            $addObj->addAnnounce($id);
+            $id =1;
+            if(!empty($_POST["title"])||!empty($_POST["description"])||!empty($_POST["category"])||!empty(["price_per_night"])||!empty($_POST["max_guests"])||!empty($_POST["amenities"])||!empty($_POST["photos"])||!empty($_POST["city"])||!empty($_POST["country"])){
+                $addObj = new AddAnnounceController;
+                $addObj->addAnnounce($id,$_POST["title"],$_POST["description"],$_POST["category"],$_POST["price_per_night"],$_POST["max_guests"],$_POST["amenities"],$_POST["photos"],$_POST["address"],$_POST["city"],$_POST["country"]);
+                
+
+            }else{
+
+                echo "fill all the inputs";
+
+            }
+
+
         }
 
         echo $this->twig->render('Front/owner/create_announcement.twig');

@@ -17,13 +17,25 @@ class AddAnnounceModel
     }
     
 
-    public function addAnnounce($id){
+    public function addAnnounce($id,$title,$description,$category,$price_per_night,$max_guests,$amenities,$photos,$address,$city,$country){
 
-      $query ="INSERT INTO property (owner_id, title, description, category, price_per_night, max_guests, amenities, photos, is_validated, address, city, country) VALUES
-                (:id, 'dar zakaria', 'Un studio cosy en plein cœur de Paris proche de la Tour Eiffel.', 'Studio', 40.00, 3, 'ARRAY'['Wi-Fi', 'Cuisine équipée', 'TV']', 'ARRAY['https://example.com/photos/paris3.jpg', 'https://example.com/photos/paris4.jpg']', TRUE, '15 Rue de la Paix', 'Paris', 'France')";
+      $query ="INSERT INTO property (owner_id, title, description, category, price_per_night, max_guests, amenities, photos, address, city, country) VALUES
+(:id, :title,:description,:category,:price_per_night,:max_guests,:amenities,:photos,:address,:city,:country );
+
+";
 
     $stmt =$this->conn->prepare($query);
-    $stmt->bindParam(":id",);
+    $stmt->bindParam(":id",$id);
+    $stmt->bindParam(":title",$title);
+    $stmt->bindParam(":description",$description);
+    $stmt->bindParam(":category",$category);
+    $stmt->bindParam(":price_per_night",$price_per_night);
+    $stmt->bindParam(":max_guests",$max_guests);
+    $stmt->bindParam(":amenities",$amenities);
+    $stmt->bindParam(":photos",$photos);
+    $stmt->bindParam(":address",$address);
+    $stmt->bindParam(":city",$city);
+    $stmt->bindParam(":country",$country);
     $stmt->execute();
     dump("success");
 
