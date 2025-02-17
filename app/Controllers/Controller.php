@@ -7,41 +7,43 @@ use Twig\Loader\FilesystemLoader;
 use App\Controllers\Front\Travler\DisplayPropertyController;
 use App\Controllers\Front\Owner\AddAnnounceController;
 class Controller
+
 {
-
     protected $twig;
-
     public static $DisplayPropertyController ;
     protected static $addannounce ;
     public function __construct()
     {
 
-         self::$DisplayPropertyController = new DisplayPropertyController;
+        self::$DisplayPropertyController = new DisplayPropertyController;
         $loader = new FilesystemLoader(__DIR__ . '/../Views');
+        $loader = new FilesystemLoader(__DIR__ . '/../Views'); 
         $this->twig = new Environment($loader, [
             'cache' => false,
+            'debug' => true
         ]);
+    }
+
+    public function render($template, $data = [])
+    {
+        echo $this->twig->render($template, $data);
+        exit;
     }
 
     public function index()
     {
-
-        echo $this->twig->render('index.twig');
-        exit;
-
+        $this->render('index.twig');
     }
 
     public function pagehome(){
 
     }
-
+    
     public function register()
     {
-
-        echo $this->twig->render('Auth/register.twig');
-        exit;
-
+        $this->render('Auth/register.twig');
     }
+
     public function housingoffer()
     {
 
@@ -52,7 +54,9 @@ class Controller
         ]);
         exit;
 
+        $this->render('Front/housingoffers.twig');
     }
+
     public function articledescription()
     {
 
@@ -89,10 +93,23 @@ class Controller
         exit;
 
     }
+    public function updateannounce()
+    {
+
+        echo $this->twig->render('Front/owner/update_announcement.twig');
+        exit;
+
+    }
+    // public function OwnerRequestsController()
+    // {
+
+    //     echo $this->twig->render('../Controllers/Front/Owner/OwnerRequestsController.php');
+    //     exit;
+
+    // }
+    
+
+        // $this->render('Front/articledescription.twig');
+    }
 
 
-
-
-
-
-}

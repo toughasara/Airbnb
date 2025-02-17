@@ -14,6 +14,7 @@ class AnonceModel {
     }
 
     public function getAllAnnonces() {
+
         $query = "SELECT * FROM property";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -36,6 +37,7 @@ class AnonceModel {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
 }
 ?>
 

@@ -5,6 +5,7 @@ use App\Controllers\ControllerAd;
 use App\Models\Back\UserModel;
 
 class UserController extends ControllerAd
+
 {
     protected $userModel;
 

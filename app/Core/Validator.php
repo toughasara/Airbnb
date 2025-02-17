@@ -10,7 +10,6 @@ class ReservationValidator
     {
         $errors = [];
 
-        // Validation des IDs
         if (!$this->validateId($data['user_id'])) {
             $errors['user_id'] = 'ID utilisateur invalide';
         }
@@ -18,12 +17,10 @@ class ReservationValidator
             $errors['property_id'] = 'ID propriété invalide';
         }
 
-        // Validation des dates
         if (!$this->validateDates($data['start_date'], $data['end_date'])) {
             $errors['dates'] = 'Les dates sont invalides';
         }
 
-        // Validation du prix
         if (!$this->validatePrice($data['total_price'])) {
             $errors['total_price'] = 'Le prix total est invalide';
         }

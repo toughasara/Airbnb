@@ -20,9 +20,7 @@ class ReservationModel
 
     }
 
-    /**
-     * Insère une nouvelle réservation en base de données.
-     */
+
     public function insertReservation(Reservation $reservation): ?int
     {
         $sql = "INSERT INTO booking (user_id, property_id, check_in_date, check_out_date, total_price, status) 
@@ -42,9 +40,7 @@ class ReservationModel
         return null;
     }
 
-    /**
-     * Met à jour une réservation après un paiement réussi.
-     */
+
     public function confirmReservation(int $id, string $transactionId): bool
     {
         $sql = "UPDATE booking SET status = 'confirmed', paypal_transaction_id = :transaction_id WHERE id = :id";
@@ -55,9 +51,7 @@ class ReservationModel
         return $stmt->execute();
     }
 
-    /**
-     * Trouve une réservation en attente.
-     */
+
     public function findPendingReservation(int $user_id, int $property_id, string $start_date, string $end_date): ?Reservation
     {
         $sql = "SELECT * FROM booking WHERE user_id = :user_id AND property_id = :property_id 
