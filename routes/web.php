@@ -34,15 +34,12 @@ Router::post('products', 'Controller@sendData');
 Router::get('dashboard', 'Back\\AdminController@dashboard');
 Router::get('users', 'UsersController@index');
 
-<<<<<<< HEAD
 
-=======
 // end hamza saaf
 Router::get('about', function(){
     echo 'this is fun';
     exit;
 });
->>>>>>> origin/Back-office
 
 
 Router::post('home', 'Controller@getUserById');

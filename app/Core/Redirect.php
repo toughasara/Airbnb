@@ -19,17 +19,17 @@ class Redirect
             'cache' => false, 
         ]);
     }
-    
+
     public function redirectPageHome($fiundUser)
     {
         $role = $fiundUser->getRole()->getId();
 
         switch ($role) {
             case 3:
-                echo $this->twig->render('Back/index.php');
+                echo $this->twig->render('Back/dashboard.twig');
                 break;
             case 2:
-                echo $this->twig->render('Front/index.php');
+                echo $this->twig->render('Front/housingoffers.twig');
                 break;
             case 1:
                 echo $this->twig->render('Front/kray.php');

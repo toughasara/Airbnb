@@ -37,7 +37,6 @@ class AddAnnounceModel
     $stmt->bindParam(":city",$city);
     $stmt->bindParam(":country",$country);
     $stmt->execute();
-    dump("success");
 
 }
 
