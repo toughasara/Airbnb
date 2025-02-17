@@ -125,17 +125,14 @@
         <!-- Housing Listings Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Property Card 1 -->
-            {{
-
-
-
-            }}
+            {% for row in rows %}
+       
             <div class="group hover-scale">
                 <div class="relative rounded-2xl overflow-hidden card-shadow bg-white">
                     <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg z-10">
                         <i data-feather="heart" class="w-5 h-5 text-rose-500"></i>
                     </div>
-                    <img src={{row.photos}}>
+                    <img src={{row.photo}}>
                     
                     <div class="p-6">
                         <div class="flex justify-between items-start mb-4">

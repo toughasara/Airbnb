@@ -21,7 +21,7 @@ class DisplayDataModele
 
     public function displayProperty(){
     
-        $query = 'SELECT title,price_per_night as price,city,country from property 
+        $query = 'SELECT title,price_per_night as price,photos as photo,city,country from property 
         where is_validated = true
         order by max_guests ;
         ';

@@ -87,6 +87,7 @@ CREATE TABLE booking (
     CONSTRAINT valid_dates CHECK (check_out_date > check_in_date),
     FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE SET NULL,
     FOREIGN KEY (traveler_id) REFERENCES "user"(id) ON DELETE SET NULL
+    
 );
 
 -- Table des avis
@@ -101,10 +102,6 @@ CREATE TABLE review (
     FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE SET NULL,
     FOREIGN KEY (traveler_id) REFERENCES "user"(id) ON DELETE SET NULL
 );
-);
-
-=======
->>>>>>> 7102472fa7427b130885d70293d7d9b55939d507
 INSERT INTO role (title) VALUES
 ('TRAVELER'),
 ('OWNER'),
@@ -144,7 +141,6 @@ CREATE TABLE payments (
 INSERT INTO review (property_id, traveler_id, rating, comment) VALUES
 (1, 1, 5, 'Super séjour, le studio est parfaitement situé et très confortable.'),
 (2, 1, 4, 'Très belle maison, mais un peu difficile à trouver.');
-<<<<<<< HEAD
 Table des paiements
 CREATE TABLE payments (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -155,7 +151,7 @@ CREATE TABLE payments (
     payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50) DEFAULT 'PENDING'
 );
-=======
+
 -- Table des paiements
 -- CREATE TABLE payments (
 --     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -166,7 +162,6 @@ CREATE TABLE payments (
 --     payment_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 --     status VARCHAR(50) DEFAULT 'PENDING'
 -- );
->>>>>>> 7102472fa7427b130885d70293d7d9b55939d507
 
 Table des fils de conversation
 CREATE TABLE conversation_threads (
