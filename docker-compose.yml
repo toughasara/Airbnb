@@ -18,7 +18,6 @@ services:
       PGADMIN_DEFAULT_EMAIL: gangdb@admin.com
       PGADMIN_DEFAULT_PASSWORD: root_password
     ports:
-      
       - "8085:80"
 
   php:
