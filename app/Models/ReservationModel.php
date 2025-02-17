@@ -7,7 +7,7 @@ use App\Config\Database;
 
 class ReservationModel
 {
-<<<<<<< HEAD
+
 
 
     private $conn;
@@ -79,8 +79,4 @@ class ReservationModel
         return null;
     }
 }
-=======
-    
-}
-?>
->>>>>>> origin/Back-office
+

@@ -2,10 +2,11 @@
 
 namespace App\Controllers\Back;
 
-use App\Controllers\Controller;
+use App\Controllers\ControllerAd;
 use App\Models\Back\AnonceModel;
 
-class AdminController extends Controller
+class AdminController extends ControllerAd
+
 {
     private $anonceModel;
 
@@ -13,6 +14,7 @@ class AdminController extends Controller
     {
         parent::__construct();
         $this->anonceModel = new AnonceModel();
+
     }
     public function dashboard()
     {

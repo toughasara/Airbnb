@@ -17,11 +17,15 @@ class UserModel
 
     public function getAllUsers()
     {
-        $query = "SELECT * FROM user";
+        $query = 'SELECT role.title, "user".id, "user".first_name, "user".last_name, "user".status, 
+       "user".email, "user".profile_picture, "user".is_connected 
+       FROM "user" INNER JOIN role ON "user".role_id = role.id;
+';
+
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-?>
 
