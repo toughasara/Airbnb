@@ -2,10 +2,10 @@
 
 namespace App\Controllers\Back;
 
-use App\Controllers\Controller;
+use App\Controllers\ControllerAd;
 use App\Models\Back\AnonceModel;
 
-class AdminController extends Controller
+class AdminController extends ControllerAd
 {
     private $anonceModel;
 
@@ -20,8 +20,6 @@ class AdminController extends Controller
         $this->render('Back/dashboard.twig', [
             'title' => 'Dashboard',
             'anonces' => $anonces
-
-
         ]);
     }
 }

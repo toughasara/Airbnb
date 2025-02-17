@@ -1,10 +1,10 @@
 <?
 namespace App\Controllers\Back;
 
-use App\Controllers\Controller;
+use App\Controllers\ControllerAd;
 use App\Models\Back\UserModel;
 
-class UserController extends Controller
+class UserController extends ControllerAd
 {
     protected $userModel;
 
