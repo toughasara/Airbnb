@@ -26,6 +26,10 @@ class Controller
 
     }
 
+    public function pagehome(){
+
+    }
+    
     public function register()
     {
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\UserModel;
@@ -7,6 +8,7 @@ use App\Core\Redirect;
 use App\Core\ErrorsHandling;
 use App\Core\Validation;
 use App\Classes\User;
+use Dotenv\Dotenv;
 
 use Google\Client;
 use Google\Service\Oauth2 as Google_Service_Oauth2;
@@ -24,6 +26,8 @@ class AuthController extends Controller
 
     public function getLoginPage(): void
     {
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__) . '/../');
+        $dotenv->load();
         // Google OAuth credentials
         $clientID = $_ENV['CLIENTID'];
         $clientSecret = $_ENV['CLIENTSECRET'];
@@ -31,11 +35,9 @@ class AuthController extends Controller
 
         // Create Google Client
         $client = new Client;
-
         $client->setClientId($clientID);
         $client->setClientSecret($clientSecret);
         $client->setRedirectUri($redirectUri);
-        
         $client->addScope("email");
         $client->addScope("profile");
 
@@ -78,9 +80,10 @@ class AuthController extends Controller
         }
     }
 
-    // contenuinscription
     public function postLoginWithGoogle(): void
     {
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__) . '/../');
+        $dotenv->load();
         $clientID = $_ENV['CLIENTID'];
         $clientSecret = $_ENV['CLIENTSECRET'];
         $redirectUri = $_ENV['REDIRECTURL'];
@@ -109,17 +112,14 @@ class AuthController extends Controller
 
         $client->setAccessToken($token['access_token']);
 
-        $oauth = new Google_Service_Oauth2($client);
+        $google_oauth = new Google_Service_Oauth2($client);
 
-        $userinfo = $oauth->userinfo->get();
-
-        $fullName = $userinfo->name;
-        $email = $userinfo->email;
-        $password = $userinfo->id;
-        $pic = $userinfo->picture;
-
+        $google_account_info = $google_oauth->userinfo->get();
+        $fullName = $google_account_info->name;
+        $email = $google_account_info->email;
+        $password = $google_account_info->id;
+        $pic = $google_account_info->picture;
         $user = new User($email, $password, $fullName, '', '', $pic);
-        
         $ifHasAccount = $this->postLoginPage($user);
         if (!$ifHasAccount) {
             $user = [
@@ -127,7 +127,8 @@ class AuthController extends Controller
                 'email' => $email,
                 'pic' => $pic
             ];
-            $this->view('auth/form',$user);
+            $this->view('auth/form', $user);
         }
     }
+
 }

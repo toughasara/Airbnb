@@ -81,10 +81,11 @@ class Router
 
 
             }
-            } else {
+        } else {
 
-            echo "error 404.php";
-            }
+            echo "test error 404.php";
+        }
+
     }
 
 }
