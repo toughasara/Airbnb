@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "content-hash": "dbee0ba7d21e617e4ded3d85be16b9fc",
     "packages": [
         {
@@ -130,6 +131,8 @@
         },
 =======
 
+=======
+>>>>>>> origin/Back-office
     "content-hash": "c1f2f9a4505bf08dd4a0eaa986b5b71d",
     "packages": [
 >>>>>>> 7102472fa7427b130885d70293d7d9b55939d507
@@ -311,6 +314,7 @@
         },
         {
             "name": "google/auth",
+<<<<<<< HEAD
             "version": "v1.44.0",
             "source": {
                 "type": "git",
@@ -321,6 +325,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/5670e56307d7a2eac931f677c0e59a4f8abb2e43",
                 "reference": "5670e56307d7a2eac931f677c0e59a4f8abb2e43",
+=======
+            "version": "v1.46.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/googleapis/google-auth-library-php.git",
+                "reference": "7fafae99a41984cbfb92508174263cf7bf3049b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/7fafae99a41984cbfb92508174263cf7bf3049b9",
+                "reference": "7fafae99a41984cbfb92508174263cf7bf3049b9",
+>>>>>>> origin/Back-office
                 "shasum": ""
             },
             "require": {
@@ -365,9 +381,15 @@
             "support": {
                 "docs": "https://googleapis.github.io/google-auth-library-php/main/",
                 "issues": "https://github.com/googleapis/google-auth-library-php/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.44.0"
             },
             "time": "2024-12-04T15:34:58+00:00"
+=======
+                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.46.0"
+            },
+            "time": "2025-02-12T22:21:37+00:00"
+>>>>>>> origin/Back-office
         },
         {
             "name": "graham-campbell/result-type",
