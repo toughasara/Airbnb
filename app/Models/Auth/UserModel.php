@@ -1,23 +1,33 @@
 <?php
-
 namespace App\Models\Auth;
 
-use App\Classes\User;
-use App\Core\Database;
-use PDO;
 
-class UserModel{
+use App\Config\Database;
+use App\Classes\Role; 
+use App\Classes\User;
+use PDO;
+use PDOException;
+
+class UserModel
+{
+
     private $conn;
 
-    public function __construct() {
-        $db = new Database();
-        $this->conn = $db->connection();
+    public function __construct()
+    {
+        
+        $db = Database::getInstance();
+        $this->conn = $db->connect();
+
     }
 
-    public function findUserByEmailAndPassword($email){
+    
+    public function findUserByEmail($user){
         try{
-            $query = "SELECT *  FROM utilisateurs WHERE email = :email";
+            $query = 'SELECT *  FROM "user" WHERE email = :email';
 
+            $email = $user->getEmail();
+            dump($email);
             $stmt = $this->conn->prepare($query); 
             $stmt->bindParam(":email", $email);
             $stmt->execute();
@@ -25,7 +35,8 @@ class UserModel{
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($row) {
-                return new Utilisateur($row["id"],$row["nom"],$row["email"],$row["password"],$row["role"],$row["status"],$row["created_at"],$row["deleted_at"]);
+                $role = new Role($row["role_id"], '');
+                return new User($row["id"], $role,$row["first_name"],$row["last_name"],$row["email"],$row["password"],$row["phone_number"],$row["profile_picture"],$row["status"],$row["created_at"],$row["last_login"],$row["is_connected"]);
             } else {
                 return null;
             }
@@ -36,23 +47,41 @@ class UserModel{
         }
     }
 
+    $user = new User(null, $role, $first_name, $last_name, $email, $password, null, null, 'active');
 
-    public function Registre($utilisateur){
-        $name = $utilisateur->getNom();
-        $email = $utilisateur->getEmail();
-        $password = $utilisateur->getPassword();
-        $role = $utilisateur->getRole();
-        $status = $utilisateur->getStatus();
+    public function createUser($user)
+    {
+        try {
+            $query = 'INSERT INTO "user" (role_id, first_name, last_name, email, password, phone_number, profile_picture, status) 
+                        VALUES (:role_id, :first_name, :last_name, :email, :password, :phone_number, :profile_picture, :status)';
 
-        $query = "INSERT INTO utilisateurs (nom, email, password, role, status) 
-                VALUES (:nom, :email, :password, :role, :status);";
-        $stmt = $this->conn->prepare($query);
+            $role = $user->getRole()->getId();
+            $first_name = $user->getFirstName();
+            $last_name = $user->getLastName();
+            $email = $user->getEmail();
+            $password = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $phone_number = $user->getPhoneNumber();
+            $profile_picture = $user->getProfilePicture();
+            $status = $user->getStatus();
 
-        $stmt->bindParam(':nom', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':status', $status);
-        $stmt->execute();
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":role_id", $role);
+            $stmt->bindParam(":first_name", $first_name);
+            $stmt->bindParam(":last_name", $last_name);
+            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":password", $password);
+            $stmt->bindParam(":phone_number", $phone_number);
+            $stmt->bindParam(":profile_picture", $profile_picture);
+            $stmt->bindParam(":status", $status);
+            return $stmt->execute();
+
+        } catch (PDOException $e) {
+            error_log("Erreur de base de données : " . $e->getMessage());
+            return false;
+        }
     }
+
+
+
+
 }

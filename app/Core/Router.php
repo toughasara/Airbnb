@@ -42,6 +42,7 @@ class Router
         $requestURI = str_replace('index.php', '', $requestURI);
         $requestURI = str_replace('Airbnb/public', '', $requestURI);
         $requestURI = trim($requestURI, '/');
+
         if (isset(self::$Routes[$requestmethod][$requestURI])) {
 
             $action = self::$Routes[$requestmethod][$requestURI];
@@ -81,10 +82,11 @@ class Router
 
 
             }
-            } else {
+        } else {
 
-            echo "error 404.php";
-            }
+            echo "test error 404.php";
+        }
+
     }
 
 }
