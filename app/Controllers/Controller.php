@@ -64,7 +64,7 @@ class Controller
         exit;
 
     }   
-     public function addannounce()
+    public function addannounce()
     {
         if(isset($_POST['addAnnounce'])){
             $id =1;

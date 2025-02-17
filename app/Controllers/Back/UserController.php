@@ -1,16 +1,16 @@
 <?
 namespace App\Controllers\Back;
 
-use App\Controllers\Controller;
+use App\Controllers\ControllerAd;
 use App\Models\Back\UserModel;
 
-class UserController extends Controller
+class UserController extends ControllerAd
 {
     protected $userModel;
 
-    public function __construct()
+    public function construct()
     {
-        parent::__construct();
+        parent::construct();
         $this->userModel = new UserModel();
     }
     public function index()

@@ -26,10 +26,12 @@ class Redirect
 
         switch ($role) {
             case 3:
-                echo $this->twig->render('Back/dashboard.twig');
+                // echo $this->twig->render('Back/dashboard.twig');
+                header('Location: /dashboard');
                 break;
             case 2:
-                echo $this->twig->render('Front/housingoffers.twig');
+                // echo $this->twig->render('Front/housingoffers.twig');
+                header('Location: /housingoffer');
                 break;
             case 1:
                 echo $this->twig->render('Front/kray.php');

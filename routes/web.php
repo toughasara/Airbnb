@@ -31,10 +31,9 @@ Router::get('contact', 'Controller@contact');
 Router::post('products', 'Controller@sendData');
 
 // hamza saaf
-Router::get('dashboard', 'Back\\AdminController@dashboard');
-Router::get('users', 'UsersController@index');
-
-
+Router::get('dashboard', 'Back\AdminController@dashboard');
+Router::get('users', 'Back\UserController@index');
+Router::post('validat/{id}', 'Back\AnonceController@validat');
 // end hamza saaf
 Router::get('about', function(){
     echo 'this is fun';
