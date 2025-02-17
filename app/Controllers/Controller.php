@@ -4,27 +4,20 @@ namespace App\Controllers;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-<<<<<<< HEAD
 use App\Controllers\Front\Travler\DisplayPropertyController;
 use App\Controllers\Front\Owner\AddAnnounceController;
 class Controller
-=======
 
-class Controller 
->>>>>>> origin/Back-office
 {
     protected $twig;
     public static $DisplayPropertyController ;
     protected static $addannounce ;
     public function __construct()
     {
-<<<<<<< HEAD
 
-         self::$DisplayPropertyController = new DisplayPropertyController;
+        self::$DisplayPropertyController = new DisplayPropertyController;
         $loader = new FilesystemLoader(__DIR__ . '/../Views');
-=======
-        $loader = new FilesystemLoader(__DIR__ . '/../Views'); // مجلد القوالب
->>>>>>> origin/Back-office
+        $loader = new FilesystemLoader(__DIR__ . '/../Views'); 
         $this->twig = new Environment($loader, [
             'cache' => false,
             'debug' => true
@@ -53,7 +46,6 @@ class Controller
 
     public function housingoffer()
     {
-<<<<<<< HEAD
 
         $rows = self::$DisplayPropertyController->DisplayPropertyController();
         
@@ -62,14 +54,11 @@ class Controller
         ]);
         exit;
 
-=======
         $this->render('Front/housingoffers.twig');
->>>>>>> origin/Back-office
     }
 
     public function articledescription()
     {
-<<<<<<< HEAD
 
         echo $this->twig->render('Front/articledescription.twig');
         exit;
@@ -120,12 +109,7 @@ class Controller
     // }
     
 
-
-
-=======
-        $this->render('Front/articledescription.twig');
+        // $this->render('Front/articledescription.twig');
     }
 
-   
->>>>>>> origin/Back-office
-}
+
