@@ -36,13 +36,13 @@ class Router
     // hendler routes :
     public static function matcheRoutes($requestURI, $requestmethod){
 
+        // dump(self::$Routes);
 
         //  home
 
         $requestURI = str_replace('index.php', '', $requestURI);
         $requestURI = str_replace('Airbnb/public', '', $requestURI);
         $requestURI = trim($requestURI, '/');
-
         if (isset(self::$Routes[$requestmethod][$requestURI])) {
 
             $action = self::$Routes[$requestmethod][$requestURI];
@@ -76,16 +76,17 @@ class Router
 
 
                 $objectController = new $controller();
-
+                // dump("end");
 
                 return $objectController->$method();
 
 
             }
-            } else {
+        } else {
 
-            echo "error 404.php";
-            }
+            echo "test error 404.php";
+        }
+
     }
 
 }

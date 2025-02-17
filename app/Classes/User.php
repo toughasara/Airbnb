@@ -4,7 +4,9 @@ namespace App\Classes;
 
 
 class User{
+
     private $id;
+    private $role;
     private $first_name;
     private $last_name;
     private $email;
@@ -16,21 +18,9 @@ class User{
     private $last_login;
     private $is_connected;
 
-    // public function __construct($id=null, $first_name, $last_name, $email, $password, $phone_number=null, $profile_picture=null, $status, $created_at= null, $last_login= null, $is_connected=false){
-    //     $this->id = $id;
-    //     $this->first_name = $first_name;
-    //     $this->last_name = $last_name;
-    //     $this->email = $email;
-    //     $this->password = $password;
-    //     $this->phone_number = $phone_number;
-    //     $this->profile_picture = $profile_picture;
-    //     $this->status = $status;
-    //     $this->created_at = $created_at ?? date("Y-m-d H:i:s"); ;
-    //     $this->last_login = $last_login;
-    //     $this->is_connected = $is_connected;
-    // }
     public function __construct(
         $id = null, 
+        ?Role $role = null,
         $first_name = null, 
         $last_name = null, 
         $email = null, 
@@ -43,6 +33,7 @@ class User{
         $is_connected = false
     ) {
         $this->id = $id;
+        $this->role = $role;
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->email = $email;
@@ -59,6 +50,10 @@ class User{
     // Getters 
     public function getId() {
         return $this->id;
+    }
+
+    public function getRole() {
+        return $this->role;
     }
 
     public function getFirstName() {
@@ -102,6 +97,10 @@ class User{
     }
 
     // Setters 
+    public function setRole(Role $role) {
+        $this->role = $role;
+    }
+
     public function setFirstName($first_name) {
         $this->first_name = $first_name;
     }
