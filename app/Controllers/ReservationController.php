@@ -21,9 +21,7 @@ class ReservationController
         $this->paymentService = new PaymentService();
     }
 
-    /**
-     * Gère la création de réservation et redirige vers PayPal pour le paiement.
-     */
+
     public function showReservationForm()
     {
 
@@ -34,7 +32,6 @@ class ReservationController
     public function processReservation()
     {
         try {
-            // Vérifier que les champs requis sont présents
             $requiredFields = ['user_id', 'property_id', 'start_date', 'end_date', 'total_price'];
             foreach ($requiredFields as $field) {
                 if (empty($_POST[$field])) {
@@ -42,7 +39,6 @@ class ReservationController
                 }
             }
 
-            // Nettoyer et préparer les données
             $data = [
                 'user_id' => (int) $_POST['user_id'],
                 'property_id' => (int) $_POST['property_id'],
@@ -51,21 +47,18 @@ class ReservationController
                 'total_price' => floatval($_POST['total_price']),
             ];
 
-            // Enregistrer la réservation
             $reservation = $this->reservationService->createReservation($data);
 
             if (!$reservation) {
                 throw new \Exception("Erreur lors de la création de la réservation.");
             }
 
-            // Créer le paiement PayPal
             $paymentResponse = $this->paymentService->createPayment($data['total_price']);
 
             if (!$paymentResponse['success']) {
                 throw new \Exception("Erreur PayPal : " . $paymentResponse['error']);
             }
 
-            // Rediriger vers la page de paiement PayPal
             header("Location: " . $paymentResponse['approval_url']);
             exit();
 
@@ -74,38 +67,32 @@ class ReservationController
         }
     }
 
-    /**
-     * Vérifie la validation du paiement PayPal et confirme la réservation.
-     */
+
     public function confirmPayment()
     {
         try {
             $data = json_decode(file_get_contents("php://input"), true);
     
-            // 🔴 Vérifier si l'ID de transaction PayPal est présent
             if (!isset($data['paypal_transaction_id']) || empty($data['paypal_transaction_id'])) {
                 throw new \Exception("🚨 Le paiement PayPal a échoué (pas de transaction ID).");
             }
     
-            // 🔴 Vérifier les données requises
             if (!isset($data['user_id'], $data['property_id'], $data['start_date'], $data['end_date'], $data['total_price'])) {
                 throw new \Exception("🚨 Données de réservation manquantes.");
             }
     
-            // 🔍 Debug : afficher les données reçues
-            error_log("🟢 Données reçues: " . json_encode($data));
+            error_log(" Données reçues: " . json_encode($data));
     
-            // Mettre à jour la réservation
             $reservationService = new ReservationService();
             $success = $reservationService->confirmReservation($data);
     
             if ($success) {
                 echo json_encode(["success" => true, "message" => "Réservation confirmée !"]);
             } else {
-                throw new \Exception("🚨 Échec de la mise à jour de la réservation en base.");
+                throw new \Exception("Échec de la mise à jour de la réservation en base.");
             }
         } catch (\Exception $e) {
-            error_log("⚠️ Erreur: " . $e->getMessage());
+            error_log("Erreur: " . $e->getMessage());
             echo json_encode(["success" => false, "message" => $e->getMessage()]);
         }
     }
