@@ -36,6 +36,7 @@ class Router
     // hendler routes :
     public static function matcheRoutes($requestURI, $requestmethod){
 
+        // dump(self::$Routes);
 
         //  home
 
@@ -75,7 +76,7 @@ class Router
 
 
                 $objectController = new $controller();
-
+                // dump("end");
 
                 return $objectController->$method();
 
